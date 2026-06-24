@@ -1,0 +1,19 @@
+# Entorno virtual
+venv/
+
+# Caches de Python
+__pycache__/
+*.pyc
+
+# Variables de entorno y llaves secretas
+.env
+
+# Base de datos SQLite por defecto (si se usa de respaldo)
+db.sqlite3
+
+# Archivos de media/subidos
+media/
+
+# Archivos específicos de sistema operativo
+.DS_Store
+Thumbs.db
