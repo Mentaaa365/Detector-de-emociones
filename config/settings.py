@@ -10,26 +10,31 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import os
 from pathlib import Path
+import environ
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Directorio raíz del proyecto (BASE_DIR)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Inicializar django-environ para leer variables del archivo .env
+env = environ.Env()
+# Intentar leer el archivo .env ubicado en la raíz del proyecto
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-4^uqu76s)82rehez@!sy2%bcy9mx9&92xkw$7o_!*h4&f5!9_#'
+# Clave secreta leída de forma segura desde las variables de entorno (.env)
+SECRET_KEY = env('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Control del modo debug leída desde las variables de entorno (.env) con valor por defecto False
+DEBUG = env.bool('DEBUG', default=False)
 
 ALLOWED_HOSTS = []
 
 
-# Application definition
-
+# Definición de Aplicaciones del Proyecto
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Aplicación principal del detector de emociones faciales (registrada por Integrante 1)
+    'detection',
 ]
 
 MIDDLEWARE = [
@@ -70,13 +77,16 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
+# Configuración de Base de Datos - Conexión a PostgreSQL
+# Se leen las credenciales del archivo .env utilizando django-environ
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
     }
 }
 
