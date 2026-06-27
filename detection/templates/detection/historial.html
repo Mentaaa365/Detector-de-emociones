@@ -1,0 +1,110 @@
+{% extends "detection/base.html" %}
+
+{% block title %}Historial - Detector de Emociones{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1>Historial de <span>Detecciones</span></h1>
+    <p class="hero-subtitle">Registro de sesiones y emociones detectadas</p>
+</section>
+
+{% if emociones_count %}
+<section class="stats-section">
+    <h2>Resumen de Emociones</h2>
+    <div class="stats-grid">
+        {% for emotion, count in emociones_count.items %}
+        <div class="stat-card">
+            <span class="stat-emotion">
+                {% if emotion == "happy" %}&#128522;
+                {% elif emotion == "sad" %}&#128546;
+                {% elif emotion == "angry" %}&#128545;
+                {% elif emotion == "surprise" %}&#128562;
+                {% elif emotion == "neutral" %}&#128528;
+                {% elif emotion == "fear" %}&#128552;
+                {% elif emotion == "disgust" %}&#129314;
+                {% endif %}
+            </span>
+            <span class="stat-label">{{ emotion }}</span>
+            <span class="stat-count">{{ count }}</span>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<section class="history-section">
+    <h2>Sesiones Recientes</h2>
+    {% if sesiones %}
+    <div class="table-wrapper">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Inicio</th>
+                    <th>Fin</th>
+                    <th>Estado</th>
+                    <th>Dispositivo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sesion in sesiones %}
+                <tr>
+                    <td>{{ sesion.id }}</td>
+                    <td>{{ sesion.started_at|date:"d/m/Y H:i:s" }}</td>
+                    <td>{{ sesion.ended_at|date:"d/m/Y H:i:s"|default:"-" }}</td>
+                    <td>
+                        {% if sesion.ended_at %}
+                            <span class="session-ended">Finalizada</span>
+                        {% else %}
+                            <span class="session-active">En curso</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ sesion.device_info|truncatechars:40|default:"-" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <p>No hay sesiones registradas. Inicia una deteccion desde la pagina principal.</p>
+    </div>
+    {% endif %}
+</section>
+
+<section class="history-section">
+    <h2>Ultimas Detecciones</h2>
+    {% if registros %}
+    <div class="table-wrapper">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Emocion</th>
+                    <th>Confianza</th>
+                    <th>Sesion</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in registros %}
+                <tr>
+                    <td>{{ r.detected_at|date:"d/m/Y H:i:s" }}</td>
+                    <td>
+                        <span class="emotion-badge emotion-{{ r.emotion }}">
+                            {{ r.get_emotion_display }}
+                        </span>
+                    </td>
+                    <td>{{ r.confidence }}%</td>
+                    <td>{{ r.session_id }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <p>No hay emociones detectadas todavia.</p>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

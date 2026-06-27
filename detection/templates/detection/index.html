@@ -1,0 +1,79 @@
+{% extends "detection/base.html" %}
+
+{% block title %}Inicio - Detector de Emociones{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1>Detector de Emociones <span>en Tiempo Real</span></h1>
+    <p class="hero-subtitle">Analiza expresiones faciales con OpenCV y DeepFace</p>
+</section>
+
+<section class="video-section">
+    <div class="video-card">
+        <div class="video-header">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText">Camara detenida</span>
+        </div>
+        <div class="video-container">
+            <img id="videoFeed" alt="Video en tiempo real">
+            <div class="video-placeholder" id="videoPlaceholder">
+                <span class="placeholder-icon">&#127909;</span>
+                <p>Presiona <strong>Iniciar Camara</strong> para comenzar</p>
+            </div>
+        </div>
+        <div class="video-controls">
+            <button class="btn btn-start" id="btnIniciar" onclick="iniciarCamara()">
+                Iniciar Camara
+            </button>
+            <button class="btn btn-stop" id="btnDetener" onclick="detenerCamara()" disabled>
+                Detener
+            </button>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const videoFeed = document.getElementById('videoFeed');
+    const placeholder = document.getElementById('videoPlaceholder');
+    const statusDot = document.getElementById('statusDot');
+    const statusText = document.getElementById('statusText');
+    const btnIniciar = document.getElementById('btnIniciar');
+    const btnDetener = document.getElementById('btnDetener');
+
+    let sessionId = null;
+
+    function iniciarCamara() {
+        fetch("{% url 'detection:iniciar_sesion' %}", { method: 'POST' })
+            .then(r => r.json())
+            .then(data => {
+                sessionId = data.session_id;
+                videoFeed.src = "{% url 'detection:video_feed' %}?" + Date.now();
+                videoFeed.style.display = 'block';
+                placeholder.style.display = 'none';
+                statusDot.classList.add('active');
+                statusText.textContent = 'Detectando emociones...';
+                btnIniciar.disabled = true;
+                btnDetener.disabled = false;
+            });
+    }
+
+    function detenerCamara() {
+        videoFeed.src = '';
+        videoFeed.style.display = 'none';
+        placeholder.style.display = 'flex';
+        statusDot.classList.remove('active');
+        statusText.textContent = 'Camara detenida';
+        btnIniciar.disabled = false;
+        btnDetener.disabled = true;
+
+        if (sessionId) {
+            fetch("{% url 'detection:detener_sesion' session_id=0 %}".replace('0', sessionId), {
+                method: 'POST',
+            });
+            sessionId = null;
+        }
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,327 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #111;
+    color: #aaa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ── Navbar ── */
+.navbar {
+    background: #161616;
+    padding: 0 2rem;
+    height: 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #222;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-icon { font-size: 1.3rem; }
+
+.nav-brand a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 0.3rem;
+}
+
+.nav-links a {
+    color: #666;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.85rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    transition: all 0.15s;
+}
+
+.nav-links a:hover { color: #ccc; }
+.nav-links a.active { color: #fff; background: #2a2a2a; }
+
+/* ── Container ── */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    flex: 1;
+    width: 100%;
+}
+
+/* ── Hero ── */
+.hero {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.hero h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #eee;
+    letter-spacing: -0.5px;
+}
+
+.hero h1 span { color: #10b981; }
+
+.hero-subtitle {
+    color: #555;
+    font-size: 0.9rem;
+    margin-top: 0.4rem;
+}
+
+/* ── Video ── */
+.video-section { margin-bottom: 2rem; }
+
+.video-card {
+    background: #161616;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #222;
+}
+
+.video-header {
+    padding: 0.6rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: #555;
+    border-bottom: 1px solid #1c1c1c;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #333;
+    flex-shrink: 0;
+}
+
+.status-dot.active {
+    background: #10b981;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    50% { opacity: 0.5; }
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    min-height: 400px;
+    background: #0a0a0a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.video-container img {
+    width: 100%;
+    display: none;
+}
+
+.video-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    color: #333;
+}
+
+.placeholder-icon { font-size: 3rem; }
+.video-placeholder p { font-size: 0.85rem; }
+
+.video-controls {
+    padding: 0.8rem 1rem;
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+    border-top: 1px solid #1c1c1c;
+}
+
+/* ── Buttons ── */
+.btn {
+    padding: 0.55rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+}
+
+.btn:disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
+}
+
+.btn-start {
+    background: #10b981;
+    color: #fff;
+}
+
+.btn-start:hover:not(:disabled) {
+    background: #0d9668;
+    box-shadow: 0 2px 12px rgba(16, 185, 129, 0.3);
+}
+
+.btn-stop {
+    background: #1c1c1c;
+    color: #ef4444;
+    border: 1px solid #2a2a2a;
+}
+
+.btn-stop:hover:not(:disabled) {
+    background: #221616;
+    border-color: #ef4444;
+}
+
+/* ── Stats ── */
+.stats-section { margin-bottom: 2rem; }
+
+.stats-section h2,
+.history-section h2 {
+    color: #ddd;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 0.6rem;
+}
+
+.stat-card {
+    background: #161616;
+    padding: 1rem 0.6rem;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid #222;
+}
+
+.stat-emotion { font-size: 1.6rem; display: block; }
+.stat-label { display: block; color: #555; font-size: 0.7rem; text-transform: capitalize; margin: 0.15rem 0; }
+.stat-count { display: block; color: #10b981; font-size: 1.3rem; font-weight: 700; }
+
+/* ── Tables ── */
+.history-section { margin-bottom: 2rem; }
+
+.table-wrapper {
+    overflow-x: auto;
+    border-radius: 10px;
+    border: 1px solid #222;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #161616;
+}
+
+.data-table th {
+    background: #1a1a1a;
+    color: #10b981;
+    padding: 0.6rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.data-table td {
+    padding: 0.55rem 1rem;
+    border-top: 1px solid #1e1e1e;
+    font-size: 0.82rem;
+    color: #777;
+}
+
+.data-table tbody tr:hover { background: #1a1a1a; }
+
+/* ── Badges ── */
+.emotion-badge {
+    display: inline-block;
+    padding: 0.15rem 0.55rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.emotion-happy    { background: #10b98118; color: #10b981; }
+.emotion-sad      { background: #3b82f618; color: #3b82f6; }
+.emotion-angry    { background: #ef444418; color: #ef4444; }
+.emotion-surprise { background: #f59e0b18; color: #f59e0b; }
+.emotion-neutral  { background: #6b728018; color: #6b7280; }
+.emotion-fear     { background: #a855f718; color: #a855f7; }
+.emotion-disgust  { background: #f97316; color: #fff; }
+
+.session-active {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: #10b98118;
+    color: #10b981;
+}
+
+.session-ended { color: #444; }
+
+/* ── Empty State ── */
+.empty-state {
+    text-align: center;
+    padding: 2rem;
+    background: #161616;
+    border-radius: 10px;
+    border: 1px dashed #222;
+    color: #444;
+    font-size: 0.85rem;
+}
+
+/* ── Footer ── */
+.footer {
+    text-align: center;
+    padding: 1rem;
+    color: #333;
+    font-size: 0.75rem;
+    border-top: 1px solid #1a1a1a;
+}
+
+/* ── Responsive ── */
+@media (max-width: 500px) {
+    .navbar { flex-direction: column; gap: 0.5rem; height: auto; padding: 0.8rem 1rem; }
+    .hero h1 { font-size: 1.4rem; }
+    .video-controls { flex-direction: column; }
+    .btn { width: 100%; }
+    .container { padding: 1.2rem 1rem; }
+}

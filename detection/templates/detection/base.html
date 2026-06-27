@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Detector de Emociones{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'detection/css/styles.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="nav-icon">&#128566;</span>
+            <a href="{% url 'detection:index' %}">Detector de Emociones</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{% url 'detection:index' %}" class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">Inicio</a></li>
+            <li><a href="{% url 'detection:historial' %}" class="{% if request.resolver_match.url_name == 'historial' %}active{% endif %}">Historial</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>Detector de Emociones Faciales &mdash; UNEMI 2026 &mdash; Construccion de Software</p>
+    </footer>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>
