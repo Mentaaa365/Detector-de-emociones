@@ -2,6 +2,20 @@
 
 Este proyecto es una aplicación web para la detección de emociones faciales en tiempo real usando Python, Django, OpenCV, DeepFace y PostgreSQL.
 
+---
+
+## Tecnologías utilizadas
+
+* Python 3.13.x
+* Django
+* OpenCV
+* DeepFace
+* TensorFlow
+* tf-keras
+* PostgreSQL
+
+---
+
 ## Requerimientos del Sistema
 
 * **Python 3.13.x**: El proyecto requiere específicamente Python 3.13 debido a que la pila de dependencias (TensorFlow 2.21.0, tf-keras 2.21.0, y DeepFace 0.0.100) ha sido verificada y testeada para ser totalmente compatible en esta versión de Python para sistemas Windows.
